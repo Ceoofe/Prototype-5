@@ -10,8 +10,12 @@ public class GameManager : MonoBehaviour
     public List<GameObject> targets;
     private float spawnRate = 1.0f;
     private int score;
+    public int lives = 3;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI liveText;
+    public GameObject pausedMenu;
+    public bool isPaused = false;
     public bool isGameActive;
     public Button restartButton;
     public GameObject titleScreen;
@@ -25,7 +29,26 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (lives <= 0 || score < 0)
+        {
+            GameOver();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+            pausedMenu.SetActive(!isPaused);
+            isPaused = !isPaused;
+        }
+   //    else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+
     }
 
     IEnumerator SpawnTarget()
@@ -43,6 +66,12 @@ public class GameManager : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
+    }
+
+    public void UpdateLive()
+    {
+        lives -= 1;
+        liveText.text = "Lives: " + lives;
     }
 
     public void GameOver()
