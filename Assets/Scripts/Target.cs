@@ -30,7 +30,7 @@ public class Target : MonoBehaviour
         
     }
 
-    Vector3 RandomForce()
+    Vector3 RandomForce() // Random up force for targets and random positions
     {
         return Vector3.up * Random.Range(minSpeed, maxSpeed);
     }
@@ -43,7 +43,7 @@ public class Target : MonoBehaviour
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
 
-    private void OnMouseDown()
+    private void OnMouseDown() // Destroys the target when the player hits the target
     {
         if (gameManager.isGameActive)
         {
@@ -53,7 +53,7 @@ public class Target : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // Destroys the target and lose a live when the target falls below
     {
         Destroy(gameObject);
         if (!gameObject.CompareTag("Bad") && gameManager.isGameActive)
